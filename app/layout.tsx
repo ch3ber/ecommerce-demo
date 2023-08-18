@@ -1,6 +1,7 @@
 import NavbarComponent from '@/components/Navbar'
 import './globals.css'
 import { Providers } from './providers'
+import { Link } from '@nextui-org/link'
 
 export const metadata = {
   title: 'E-commerce Demo',
@@ -15,12 +16,27 @@ export default function RootLayout({
   return (
     <html lang="en" className='dark'>
       <body>
-        <NavbarComponent />
-        <main>
-          <Providers>
+        <Providers>
+          <NavbarComponent />
+          <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
             {children}
-          </Providers>
-        </main>
+          </main>
+          <footer className="w-full flex flex-col items-center justify-center py-3 gap-2">
+            <Link isExternal className='text-gray-500 flex items-center gap-1' href='https://ch3ber.github.io'>
+              <p>Develop by</p>
+              <span className='font-bold text-primary'>Eber Alejo</span>
+            </Link>
+            <Link
+              isExternal
+              className="flex items-center gap-1 text-current"
+              href="https://nextui-docs-v2.vercel.app?utm_source=next-app-template"
+              title="nextui.org homepage"
+            >
+              <span className="text-default-600">Powered by</span>
+              <p className="text-primary">NextUI</p>
+            </Link>
+          </footer>
+        </Providers>
       </body>
     </html>
   )
