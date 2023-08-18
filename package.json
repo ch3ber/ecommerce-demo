@@ -6,10 +6,15 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "11.11.1",
+    "@emotion/styled": "11.11.0",
+    "@mui/material": "5.14.5",
+    "@mui/x-date-pickers": "6.11.2",
     "@nextui-org/react": "2.0.22",
     "@supabase/auth-helpers-nextjs": "latest",
     "@supabase/supabase-js": "latest",
     "autoprefixer": "10.4.14",
+    "dayjs": "1.11.9",
     "framer-motion": "10.16.0",
     "next": "latest",
     "postcss": "8.4.24",

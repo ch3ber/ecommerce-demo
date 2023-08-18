@@ -1,4 +1,12 @@
+import CalendarForm from "@/components/CalendarForm";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+
 export default async function Calendar() {
+  const supabase = createServerComponentClient({ cookies })
+  const data = await supabase.auth.getSession()
+  console.log(data.data.session)
+
   return (
     <>
       <section className="text-center">
@@ -7,6 +15,7 @@ export default async function Calendar() {
         <div className="rounded-lg overflow-hidden h-80 m-10">
           <iframe className='w-full h-full' src="https://calendar.google.com/calendar/embed?height=600&wkst=1&bgcolor=%23ffffff&ctz=America%2FMexico_City&mode=WEEK&hl=es_419&showTabs=0&showCalendars=1&showDate=1&showNav=1&showTitle=0&src=YWY1ZmVjMTgyODBjNDQ2ZTNjOWIzNTlkMGQ4MDg5ZDZhMzUyZmI5N2YyYzIyOGU4OGRlMWNhYmE0OGNiZWNjY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t&color=%23E67C73"></iframe>
         </div>
+        <CalendarForm />
       </section>
     </>
   );
