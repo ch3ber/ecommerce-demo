@@ -1,12 +1,6 @@
 import CalendarForm from "@/components/CalendarForm";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
 
 export default async function Calendar() {
-  const supabase = createServerComponentClient({ cookies })
-  const data = await supabase.auth.getSession()
-  console.log(data.data.session)
-
   return (
     <>
       <section className="text-center">

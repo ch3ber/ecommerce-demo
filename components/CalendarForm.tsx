@@ -1,6 +1,6 @@
 'use client'
 import { DateTimePicker } from "@mui/x-date-pickers";
-import { Button } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 import { Input } from "@nextui-org/react";
@@ -18,7 +18,7 @@ export default function CalendarForm() {
       setSession(data)
     }
     getData();
-  }, []);
+  }, [supabase]);
 
   const [isLoading, setIsLoading] = useState(false)
   const [eventName, setEventName] = useState('')
@@ -57,18 +57,26 @@ export default function CalendarForm() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start gap-2">
-      <div className="flex flex-col items-start w-auto">
-        <label>Date start</label>
-        <DateTimePicker disablePast onChange={setStart} />
+    <>
+      <h2 className="font-bold text-center text-2xl">Agenda tu cita</h2>
+      <Divider className="my-10" />
+      <div className="w-full rounded-md shadow-md flex flex-col items-center justify-center gap-10">
+        <div className="flex flex-col md:flex-row gap-5">
+          <div className="flex flex-col items-start w-auto">
+            <label>Dia y hora de inicio</label>
+            <DateTimePicker disablePast onChange={setStart} />
+          </div>
+          <div className="flex flex-col items-start w-auto">
+            <label>Dia y hora de fin</label>
+            <DateTimePicker disablePast onChange={setEnd} />
+          </div>
+        </div>
+        <div className="flex flex-col md:flex-row justify-center gap-5">
+          <Input label="Event Name" name="event_name" placeholder="Ej. Limpieza dental" onChange={(e) => { setEventName(e.target.value) }} />
+          <Input label="Event Description" name="event_name" placeholder="Ej. Limpieza profunda" onChange={(e) => { setEventDescription(e.target.value) }} />
+        </div>
       </div>
-      <div className="flex flex-col items-start w-auto">
-        <label>Date end</label>
-        <DateTimePicker disablePast onChange={setEnd} />
-      </div>
-      <Input label="Event Name" name="event_name" placeholder="Ej. Limpieza dental" onChange={(e) => { setEventName(e.target.value) }} />
-      <Input label="Event Description" name="event_name" placeholder="Ej. Limpieza profunda" onChange={(e) => { setEventDescription(e.target.value) }} />
-      <Button onClick={() => createEvent()} color="primary" isDisabled={isLoading}>Crear evento</Button>
-    </div>
+      <Button onClick={() => createEvent()} color="primary" isDisabled={isLoading} className="mt-10">Crear evento</Button>
+    </>
   )
 }

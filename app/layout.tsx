@@ -14,14 +14,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className='dark'>
       <body>
         <Providers>
           <NavbarComponent />
           <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
             {children}
           </main>
-          <footer className="w-full flex flex-col items-center justify-center py-3 gap-2">
+          <footer className="mt-20 w-full flex flex-col items-center justify-center py-3 gap-2">
             <Link isExternal className='text-gray-500 flex items-center gap-1' href='https://ch3ber.github.io'>
               <p>Develop by</p>
               <span className='font-bold text-primary'>Eber Alejo</span>

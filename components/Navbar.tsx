@@ -1,8 +1,8 @@
 'use client'
-import { User, createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 import { useEffect, useState } from "react";
-import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, Button, NavbarMenuToggle, NavbarMenu, NavbarMenuItem } from "@nextui-org/react";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem, Link, NavbarMenuToggle, NavbarMenu, NavbarMenuItem, User } from "@nextui-org/react";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
 
@@ -21,7 +21,7 @@ export default function NavbarComponent() {
     }
 
     getUser()
-  }, [user, supabase])
+  }, [supabase])
 
 
   const menuItems = [
@@ -67,7 +67,16 @@ export default function NavbarComponent() {
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          {user && <span className="font-bold">{user.email}</span>}
+          {user &&
+            <User
+              name={user.user_metadata.name}
+              description={user.email}
+              avatarProps={{
+                src: user.user_metadata.picture
+              }}
+            />
+          }
+
         </NavbarItem>
         <NavbarItem className="hidden lg:flex">
           {
