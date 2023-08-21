@@ -1,11 +1,16 @@
+'use client'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import { Button } from "@nextui-org/button";
 
 export default function LogoutButton() {
+  const logOut = async () => {
+    const supabase = createClientComponentClient()
+    await supabase.auth.signOut()
+  }
+
   return (
-    <form action="/auth/sign-out" method="post">
-      <Button color="secondary" variant="ghost" type="submit">
-        Log Out
-      </Button>
-    </form>
+    <Button color="secondary" variant="ghost" onClick={() => logOut()}>
+      Log Out
+    </Button>
   )
 }
