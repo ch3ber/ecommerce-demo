@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 
 export async function POST(request: Request) {
   // fetch products from Stripe
-  const stripe = new Stripe(process.env.STRIPE_SECRET_TOKEN, {
+  const stripe = new Stripe(process.env.STRIPE_SECRET_TOKEN as string, {
     apiVersion: '2023-08-16'
   })
 
@@ -32,6 +32,7 @@ export async function POST(request: Request) {
     success_url: requestUrl.origin + '/',
     line_items: [
       {
+        // @ts-ignore
         price: products.data[0].default_price,
         quantity: 1
       }

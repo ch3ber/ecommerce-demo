@@ -13,6 +13,7 @@ export default function CalendarForm() {
   useEffect(() => {
     async function getData() {
       const { data } = await supabase.auth.getSession();
+      // @ts-ignore
       setSession(data)
       console.log(data)
     }
@@ -28,15 +29,18 @@ export default function CalendarForm() {
   const createEvent = async () => {
     setIsLoading(true)
     const data = {
+      // @ts-ignore
       providerToken: session.session.provider_token,
       event: {
         'summary': eventName,
         'description': eventDescription,
         'start': {
+          // @ts-ignore
           'dateTime': start.toISOString(), // Date.toISOString() ->
           'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone // America/Los_Angeles
         },
         'end': {
+          // @ts-ignore
           'dateTime': end.toISOString(), // Date.toISOString() ->
           'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone // America/Los_Angeles
         }
@@ -66,10 +70,12 @@ export default function CalendarForm() {
         <div className="flex flex-col md:flex-row gap-5">
           <div className="flex flex-col items-start w-auto">
             <label>Dia y hora de inicio</label>
+            {/* @ts-ignore */}
             <DateTimePicker disablePast onChange={setStart} />
           </div>
           <div className="flex flex-col items-start w-auto">
             <label>Dia y hora de fin</label>
+            {/* @ts-ignore */}
             <DateTimePicker disablePast onChange={setEnd} />
           </div>
         </div>

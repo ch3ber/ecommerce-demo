@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import Product from "./Product";
 
 export default async function ProductList() {
+  // @ts-ignore
   const stripe = new Stripe(process.env.STRIPE_SECRET_TOKEN, {
     apiVersion: '2023-08-16'
   })

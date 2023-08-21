@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 export async function POST(request: Request) {
   const requestUrl = new URL(request.url)
 
+  // @ts-ignore
   const stripe = new Stripe(process.env.STRIPE_SECRET_TOKEN, {
     apiVersion: '2023-08-16'
   })
