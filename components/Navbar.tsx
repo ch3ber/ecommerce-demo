@@ -30,12 +30,12 @@ export default function NavbarComponent() {
       href: '/',
     },
     {
-      name: 'Calendar',
+      name: 'Agendar cita',
       href: '/calendar',
     },
     {
-      name: 'Payments',
-      href: '/payments',
+      name: 'Comprar Productos',
+      href: '/products',
     },
   ];
 

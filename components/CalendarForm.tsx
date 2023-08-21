@@ -7,8 +7,6 @@ import { Input } from "@nextui-org/react";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 export default function CalendarForm() {
-  const CALENDAR_ID = 'af5fec18280c446e3c9b359d0d8089d6a352fb97f2c228e88de1caba48cbeccc@group.calendar.google.com'
-
   const supabase = createClientComponentClient()
   const [session, setSession] = useState()
 
@@ -16,9 +14,10 @@ export default function CalendarForm() {
     async function getData() {
       const { data } = await supabase.auth.getSession();
       setSession(data)
+      console.log(data)
     }
     getData();
-  }, [supabase]);
+  }, []);
 
   const [isLoading, setIsLoading] = useState(false)
   const [eventName, setEventName] = useState('')
@@ -28,32 +27,35 @@ export default function CalendarForm() {
 
   const createEvent = async () => {
     setIsLoading(true)
-    const event = {
-      'summary': eventName,
-      'description': eventDescription,
-      'start': {
-        'dateTime': start.toISOString(), // Date.toISOString() ->
-        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone // America/Los_Angeles
-      },
-      'end': {
-        'dateTime': end.toISOString(), // Date.toISOString() ->
-        'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone // America/Los_Angeles
+    const data = {
+      providerToken: session.session.provider_token,
+      event: {
+        'summary': eventName,
+        'description': eventDescription,
+        'start': {
+          'dateTime': start.toISOString(), // Date.toISOString() ->
+          'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone // America/Los_Angeles
+        },
+        'end': {
+          'dateTime': end.toISOString(), // Date.toISOString() ->
+          'timeZone': Intl.DateTimeFormat().resolvedOptions().timeZone // America/Los_Angeles
+        }
       }
     }
 
-    await fetch(`https://www.googleapis.com/calendar/v3/calendars/${CALENDAR_ID}/events`, {
-      method: "POST",
-      headers: {
-        'Authorization': 'Bearer ' + session.session.provider_token // Access token for google
-      },
-      body: JSON.stringify(event)
-    }).then((data) => {
-      return data.json();
-    }).then((data) => {
-      console.log(data);
-      alert("Event created, check your Google Calendar!");
-    });
-    setIsLoading(false)
+    try {
+      const res = await fetch('/api/checkout', {
+        method: "POST",
+        body: JSON.stringify(data)
+      })
+      const json = await res.json()
+      console.log(json.url)
+      window.location.href = json.url
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -72,11 +74,11 @@ export default function CalendarForm() {
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-center gap-5">
-          <Input label="Event Name" name="event_name" placeholder="Ej. Limpieza dental" onChange={(e) => { setEventName(e.target.value) }} />
-          <Input label="Event Description" name="event_name" placeholder="Ej. Limpieza profunda" onChange={(e) => { setEventDescription(e.target.value) }} />
+          <Input label="Nombre del paciente" name="event_name" placeholder="Ej. Eber Alejo" onChange={(e) => { setEventName('Cita de: ' + e.target.value) }} />
+          <Input label="Tratamiento" name="event_name" placeholder="Ej. Limpieza profunda" onChange={(e) => { setEventDescription(e.target.value) }} />
         </div>
       </div>
-      <Button onClick={() => createEvent()} color="primary" isDisabled={isLoading} className="mt-10">Crear evento</Button>
+      <Button onClick={() => createEvent()} color="primary" isDisabled={false} className="mt-10">Crear evento</Button>
     </>
   )
 }
