@@ -6,6 +6,7 @@ export default function LogoutButton() {
   const logOut = async () => {
     const supabase = createClientComponentClient()
     await supabase.auth.signOut()
+    window.location.reload()
   }
 
   return (
