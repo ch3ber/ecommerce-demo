@@ -8,6 +8,8 @@ import { Link } from "@nextui-org/link";
 import { Button } from "@nextui-org/button";
 import ProductList from "@/components/ProductList";
 
+export const dynamic = 'force-dynamic'
+
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies })
 
